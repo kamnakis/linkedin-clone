@@ -39,6 +39,11 @@ export default defineComponent({
   color: black;
 }
 
+.icon {
+  transition-property: transform;
+  transition-duration: 200ms;
+}
+
 .router-link-active > .icon {
   transform: rotate(10deg);
 }

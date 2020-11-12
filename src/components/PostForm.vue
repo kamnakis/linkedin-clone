@@ -11,13 +11,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { defineComponent } from '@vue/composition-api'
 import KButton from 'src/components/KButton.vue'
 
 export default defineComponent({
   name: 'PostForm',
   components: {
     KButton
-  },
+  }
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <q-header class="bg-white">
+  <q-header class="bg-white z-40">
     <q-toolbar>
       <div class="max-w-large w-full mx-auto flex items-center justify-between">
         <!-- Logo and Search bar -->
@@ -23,7 +23,11 @@
         <!-- Nav Items -->
         <div class="flex">
           <navbar-item icon="home" label="Home" to="/">
-            <div class="bg-red absolute right-0 w-4 h-4 rounded-full"></div>
+            <template v-slot:notifications>
+              <div class="bg-red-700 absolute top-0 right-0 -mr-2 w-4 h-4 rounded-full border border-white flex items-center justify-center">
+                <div class="bg-white rounded-full" style="width: 0.375rem; height: 0.375rem"></div>
+              </div>
+            </template>
           </navbar-item>
           <navbar-item icon="people" label="My Network" to="/network" />
           <navbar-item icon="work" label="Jobs" to="/jobs" />
@@ -32,7 +36,7 @@
           <navbar-item-dropdown :img="$store.getters['auth/user'].profilePicture" label="Me">
             <!-- Dropdown menu on click -->
             <template v-slot:menu>
-              <q-menu anchor="bottom right" self="top right" :offset="[0, 8]">
+              <q-menu anchor="bottom right" self="top right" :offset="[0, 6]">
                 <q-list style="max-width: 264px">
                   <q-item v-close-popup class="cursor-pointer flex flex-col">
                     <div class="flex flex-no-wrap">
@@ -43,25 +47,25 @@
                       </div>
                     </div>
                     <div class="mt-2">
-                      <q-btn outline dense rounded color="primary" label="View Profile" class="w-full" />
+                      <k-round-button label="View Profile"></k-round-button>
                     </div>
                   </q-item>
                   <q-separator />
                   <q-item v-close-popup class="flex flex-col mt-2">
                     <div class="text-gray-800 font-medium text-base">Account</div>
-                    <div class="text-gray-700 text-sm hover:underline cursor-pointer mt-3">Settings & Privacy</div>
-                    <div class="text-gray-700 text-sm hover:underline cursor-pointer mt-3">Help</div>
-                    <div class="text-gray-700 text-sm hover:underline cursor-pointer mt-3">Language</div>
+                    <div class="text-gray-600 text-sm hover:underline cursor-pointer mt-1">Settings & Privacy</div>
+                    <div class="text-gray-600 text-sm hover:underline cursor-pointer mt-1">Help</div>
+                    <div class="text-gray-600 text-sm hover:underline cursor-pointer mt-1">Language</div>
                   </q-item>
                   <q-separator />
                   <q-item v-close-popup class="flex flex-col mt-2">
                     <div class="text-gray-800 font-medium text-base">Manage</div>
-                    <div class="text-gray-700 text-sm hover:underline cursor-pointer mt-3">Posts & Activity</div>
-                    <div class="text-gray-700 text-sm hover:underline cursor-pointer mt-3">My Posted Jobs</div>
+                    <div class="text-gray-600 text-sm hover:underline cursor-pointer mt-1">Posts & Activity</div>
+                    <div class="text-gray-600 text-sm hover:underline cursor-pointer mt-1">My Posted Jobs</div>
                   </q-item>
                   <q-separator />
-                  <q-item v-close-popup class="flex flex-col mt-2">
-                    <div class="text-gray-700 text-sm hover:underline cursor-pointer">Sign out</div>
+                  <q-item v-close-popup class="flex items-center">
+                    <div class="text-gray-600 text-sm hover:underline cursor-pointer">Sign out</div>
                   </q-item>
                 </q-list>
               </q-menu>
@@ -72,8 +76,8 @@
             <navbar-item-dropdown icon="apps" label="Work" @item-click="toggleWorkSidebar()" />
             <!-- Right Side dialog on click -->
             <q-dialog v-model="workSidebar" transition-show="slide-left" transition-hide="slide-right" >
-              <q-card class="fixed bottom-0 right-0 bg-white w-full rounded-l-xl q-override" style="max-width: 380px; top: 57px">
-                <q-toolbar class="flex justify-end">
+              <q-card class="fixed bottom-0 right-0 bg-white w-full rounded-l-xl q-override" style="max-width: 380px; top: 53px">
+                <q-toolbar class="flex justify-end sticky top-0 bg-white z-10">
                   <q-btn flat round dense icon="close" class="text-darkgray" v-close-popup />
                 </q-toolbar>
 
@@ -132,12 +136,14 @@ import { defineComponent, ref, watch, reactive } from '@vue/composition-api'
 // Components
 import NavbarItem from 'src/components/NavbarItem.vue'
 import NavbarItemDropdown from 'src/components/NavbarItemDropdown.vue'
+import KRoundButton from 'src/components/KRoundButton.vue'
 
 export default defineComponent({
   name: 'AppHeader',
   components: {
     NavbarItem,
-    NavbarItemDropdown
+    NavbarItemDropdown,
+    KRoundButton
   },
   setup (_props, { root }) {
     const search = ref('')
@@ -152,7 +158,7 @@ export default defineComponent({
     }
 
     watch([workSidebar, searchFocus], async () => {
-      workSidebar.value || searchFocus.value === true ? await root.$store.dispatch('global/setTint', true) : await root.$store.dispatch('global/setTint', false)
+      await root.$store.dispatch('global/setTint', workSidebar.value || searchFocus.value)
     })
 
     const linkedInProducts = reactive([

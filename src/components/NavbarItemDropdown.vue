@@ -8,7 +8,7 @@
     </q-avatar>
     <q-icon v-if="icon" :name="icon" size="sm" />
 
-    <div class="text-xs font-light tracking-wide mt-1">
+    <div class="text-xs font-light tracking-wide">
       {{ label }}
       <q-icon name="arrow_drop_down" size="xs" />
     </div>

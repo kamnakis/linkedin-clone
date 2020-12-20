@@ -4,9 +4,10 @@
     :to="to"
     exact
   >
-    <q-icon v-if="icon" :name="icon" size="sm" class="icon" />
-    <div class="text-xs font-light tracking-wide mt-1">{{ label }}</div>
-    <slot></slot>
+    <q-icon v-if="icon" :name="icon" size="sm" class="icon">
+      <slot name="notifications"></slot>
+    </q-icon>
+    <div class="text-xs font-light tracking-wide">{{ label }}</div>
   </router-link>
 </template>
 
@@ -39,23 +40,29 @@ export default defineComponent({
   color: black;
 }
 
-.icon {
-  transition-property: transform;
-  transition-duration: 200ms;
+.router-link-active > .icon {
+  animation: scaleInOut 300ms forwards;
 }
 
-.router-link-active > .icon {
-  transform: rotate(10deg);
+@keyframes scaleInOut {
+  0% {
+    transform: scale(0.8)
+  }
+  50% {
+    transform: scale(1.2)
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .router-link-active:after {
   content: '';
   position: absolute;
   bottom: -2px;
-  border-bottom: 2px solid black;
-  animation-name: borderGrow;
-  animation-duration: .3s;
-  animation-fill-mode: forwards;
+  height: 2px;
+  background-color: black;
+  animation: borderGrow 300ms forwards;
 }
 
 @keyframes borderGrow {

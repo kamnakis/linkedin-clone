@@ -11,14 +11,18 @@ module.exports = {
       },
       maxWidth: {
         large: '1128px'
+      },
+      backgroundOpacity: {
+        10: '0.1'
       }
     }
   },
   variants: {
     borderWidth: ['responsive', 'hover', 'focus'],
     textDecoration: ['responsive', 'hover', 'focus', 'group-hover'],
-    textColor: ['responsive', 'hover', 'focus', 'group-hover'],
-    backgroundColor: ['responsive', 'hover', 'focus', 'active']
+    textColor: ['responsive', 'hover', 'focus', 'group-hover', 'active', 'disabled'],
+    backgroundColor: ['responsive', 'hover', 'focus', 'active', 'disabled'],
+    backgroundOpacity: ['responsive', 'hover', 'focus', 'active']
   },
   plugins: []
 }

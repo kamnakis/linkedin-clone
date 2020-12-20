@@ -23,10 +23,16 @@ export default defineComponent({
 
 <style lang="scss">
 .item {
-  @apply px-2 py-1 text-xs font-medium text-blue-600 cursor-pointer;
+  @apply px-2;
+  @apply py-1;
+  @apply text-xs;
+  @apply font-medium;
+  @apply text-blue-600;
+  @apply cursor-pointer;
 }
 
 .item:hover {
-  @apply text-blue-700 underline;
+  @apply text-blue-700;
+  @apply underline;
 }
 </style>

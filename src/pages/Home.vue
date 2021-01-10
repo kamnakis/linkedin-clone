@@ -17,11 +17,7 @@
         <!-- Feed filters -->
         <feed-filters></feed-filters>
         <!-- Feed -->
-        <div class="rounded-lg bg-white border border-gray-400" style="height: 450px"></div>
-        <div class="rounded-lg bg-white border border-gray-400 mt-2" style="height: 410px"></div>
-        <div class="rounded-lg bg-white border border-gray-400 mt-2" style="height: 390px"></div>
-        <div class="rounded-lg bg-white border border-gray-400 mt-2" style="height: 440px"></div>
-        <div class="rounded-lg bg-white border border-gray-400 mt-2" style="height: 475px"></div>
+        <feed></feed>
       </div>
 
       <!-- Right Column -->
@@ -74,6 +70,7 @@
 import { defineComponent } from '@vue/composition-api'
 import PostForm from 'src/components/PostForm.vue'
 import FeedFilters from 'src/components/FeedFilters.vue'
+import Feed from 'src/components/Feed.vue'
 import ProfileWidget from 'src/components/ProfileWidget.vue'
 import DiscoverWidget from 'src/components/DiscoverWidget.vue'
 import KRoundButton from 'src/components/KRoundButton.vue'
@@ -83,9 +80,13 @@ export default defineComponent({
   components: {
     PostForm,
     FeedFilters,
+    Feed,
     ProfileWidget,
     DiscoverWidget,
     KRoundButton
+  },
+  meta: {
+    title: 'Feed | LinkedIn'
   }
 })
 </script>

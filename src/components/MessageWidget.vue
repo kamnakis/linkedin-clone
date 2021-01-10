@@ -1,7 +1,7 @@
 <template>
   <div
     class="fixed bottom-0 right-0 mr-4 z-10 w-full shadow-3 rounded-t-xl overflow-hidden transition-transform duration-300"
-    style="max-width: 250px"
+    style="max-width: 280px"
     :style="{ 'transform': open ? 'translateY(0px)' : 'translateY(450px)'}"
   >
     <div class="flex items-center justify-between px-3 py-1 bg-white cursor-pointer" @click="toggleOpen()">
@@ -41,28 +41,44 @@
       </q-input>
     </div>
     <div class="relative bg-white" style="max-height: 400px; height: 400px">
-      <div class="absolute inset-0 px-2 overflow-y-scroll">
-        <div class="bg-green-500 rounded-lg h-10 my-1"></div>
-        <div class="bg-green-500 rounded-lg h-10 my-1"></div>
-        <div class="bg-green-500 rounded-lg h-10 my-1"></div>
-        <div class="bg-green-500 rounded-lg h-10 my-1"></div>
-        <div class="bg-green-500 rounded-lg h-10 my-1"></div>
-        <div class="bg-green-500 rounded-lg h-10 my-1"></div>
-        <div class="bg-green-500 rounded-lg h-10 my-1"></div>
-        <div class="bg-green-500 rounded-lg h-10 my-1"></div>
-        <div class="bg-green-500 rounded-lg h-10 my-1"></div>
-        <div class="bg-green-500 rounded-lg h-10 my-1"></div>
-      </div>
+      <q-list class="absolute inset-0 overflow-y-auto">
+        <q-item
+          v-for="user in users"
+          :key="user.login.uuid"
+          clickable
+          v-ripple
+          class="px-2"
+        >
+          <q-item-section avatar>
+            <q-avatar>
+              <img :src="user.picture.medium">
+            </q-avatar>
+          </q-item-section>
+
+          <q-item-section class="flex flex-col overflow-x-hidden -ml-2">
+            <div class="truncate text-sm">
+              {{ `${user.name.first} ${user.name.last}` }}
+            </div>
+            <div class="text-gray-700 text-xs truncate">
+              {{ `You: ${loremIpsum({count: 5, units: 'words' })}` }}
+            </div>
+            <q-separator class="mt-1" />
+          </q-item-section>
+        </q-item>
+      </q-list>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, onMounted, ref } from '@vue/composition-api'
+import { loremIpsum } from 'lorem-ipsum'
+import { User } from 'src/models/Users'
+import { RandomUserInfo } from 'src/models/Models'
 
 export default defineComponent({
   name: 'MessageWidget',
-  setup () {
+  setup (_props, { root }) {
     const open = ref(false)
     const toggleOpen = () => {
       open.value = !open.value
@@ -70,11 +86,52 @@ export default defineComponent({
 
     const search = ref('')
 
+    const users = ref<User[]>([])
+
+    onMounted(async () => {
+      try {
+        const response = await root.$axios.get<{
+          info: RandomUserInfo, results: User[]
+        }>('https://randomuser.me/api/?results=10', {
+          headers: { 'Access-Control-Allow-Origin': '*' }
+        })
+        if (response.data) {
+          users.value = response.data.results
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    })
+
     return {
+      loremIpsum,
       open,
       toggleOpen,
-      search
+      search,
+      users
     }
   }
 })
 </script>
+
+<style lang="scss" scoped>
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+</style>

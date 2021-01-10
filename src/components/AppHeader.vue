@@ -81,19 +81,19 @@
                   <q-btn flat round dense icon="close" class="text-darkgray" v-close-popup />
                 </q-toolbar>
 
-                <q-card-section class="px-6">
+                <q-card-section class="px-6 -mt-2">
                   <q-item class="flex flex-col border border-gray-300 rounded-lg p-0">
-                    <div class="p-4 text-gray-800 text-lg font-medium">
+                    <div class="px-4 py-3 text-gray-800 text-sm font-medium">
                       Visit More LinkedIn Products
                     </div>
                     <q-separator />
-                    <div class="p-4">
+                    <div class="px-4 py-2">
                       <div class="grid grid-cols-4 grid-flow-row gap-4">
                         <div class="flex flex-col items-center cursor-pointer" v-for="i in linkedInProducts" :key="i.icon">
-                          <div class="h-12 w-12 flex items-center justify-center border rounded-md shadow-sm transition-all duration-150 hover:shadow-md hover:border-gray-500">
-                            <q-icon :name="i.icon" size="md" class="text-lightblue" />
+                          <div class="h-10 w-10 flex items-center justify-center border rounded-md shadow-sm transition-all duration-150 hover:shadow-md hover:border-gray-500">
+                            <q-icon :name="i.icon" size="sm" class="text-lightblue" />
                           </div>
-                          <div class="text-gray-600 text-center text-xs mt-2">
+                          <div class="text-gray-600 text-center text-xs mt-1">
                             {{ i.title }}
                           </div>
                         </div>
@@ -102,20 +102,20 @@
                   </q-item>
 
                   <q-item class="flex flex-col border border-gray-300 rounded-lg p-0 mt-4">
-                    <div class="p-4 text-gray-800 text-lg font-medium">
+                    <div class="px-4 py-3 text-gray-800 text-sm font-medium">
                       LinkedIn Business Services
                     </div>
                     <q-separator />
                     <div class="px-4">
                       <div class="flex flex-col mt-2">
                         <div v-for="(i, index) in linkedInServices" :key="index" class="hover:underline cursor-pointer mb-2">
-                          <div class="text-sm text-gray-800 font-medium">{{i.header}}</div>
+                          <div class="text-xs text-gray-800 font-semibold">{{i.header}}</div>
                           <div class="text-xs text-gray-600 font-light">{{i.caption}}</div>
                         </div>
                       </div>
                     </div>
                     <q-separator />
-                    <div class="px-4 py-3 text-sm text-gray-800 font-medium cursor-pointer hover:underline">Create a Company Page <q-icon name="add" /></div>
+                    <div class="px-4 py-3 text-xs text-gray-800 font-medium cursor-pointer hover:underline">Create a Company Page <q-icon name="add" /></div>
                   </q-item>
                 </q-card-section>
               </q-card>
